@@ -11,6 +11,8 @@ async function fetchAndParseReport() {
   const blocks = text.split(/\n(?=URL\s+)/g);
 
   parsedData = blocks.map(block => {
+    const name = matchField(block, /Name\s+(.*?)(?=\s*(URL|Parent URL|Real URL|Result|$))/);
+
     const url = matchField(block, /URL\s+`([^`]+)'/);
     const parent = matchField(block, /Parent URL\s+(.+?)(?:,|$)/);
     const realUrl = matchField(block, /Real URL\s{3}(.*?)(?=\s*(Check time|Size|Result))/);
@@ -196,10 +198,13 @@ groupedArray.sort((a, b) => {
       block.dataset.url = link.url;  // Set data-url
       block.dataset.realUrl = link.realUrl;  // Set data-real-url
       block.dataset.status = link.status; // <-- Add status for filtering counts
-
+      if (link.name != ""){
+        linkText = `<p><strong>Link Text:</strong> ${link.name}</p>`
+      }
       block.innerHTML = ` 
         <p><strong>URL:</strong> <a href="${link.url}" target="_blank">${link.url}</a></p>
         <p><strong>Real URL:</strong> <a href="${link.realUrl}" target="_blank">${link.realUrl}</a></p>
+        ${linkText}
         <p><strong>Result:</strong> ${link.message}</p>
         <hr>
       `;
