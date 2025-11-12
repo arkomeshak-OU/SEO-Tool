@@ -46,6 +46,7 @@ if (resultError) {
       url,
       parent,
       realUrl,
+      name,
       status,
       message,
     };
@@ -193,6 +194,7 @@ groupedArray.sort((a, b) => {
     detailContent.className = "link-details";
 
     links.forEach(link => {
+      let linkText ="";
       const block = document.createElement("div");
       block.classList.add("child-link");
       block.dataset.url = link.url;  // Set data-url
