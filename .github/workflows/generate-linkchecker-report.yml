@@ -31,7 +31,12 @@ jobs:
       - name: Run Link Checker Python script
         run: |
           python3 project/scripts/runLinkChecker.py
-
+          
+      - name: Delete old backups (keep 7 most recent)
+        run: |
+          cd project/static/reports/linkchecker
+          ls -t linkchecker-report-BACKUP-*.txt | tail -n +8 | xargs -r rm --
+          
       - name: Commit and push latest report
         run: |
           git config user.name "github-actions[bot]"
