@@ -1,0 +1,8 @@
+{
+    "ignore_error_patterns": [
+      "ConnectTimeout:HTTPConnectionPool"
+    ],
+    "ignore_urls": [
+      "https://www.ieee-ras.org"
+    ]
+  }
