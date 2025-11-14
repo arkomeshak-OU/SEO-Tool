@@ -41,9 +41,15 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git pull --rebase origin main || true  # <---- prevents “fetch first”
+
+          git add -u
           git add project/static/reports/linkchecker/linkchecker-report.txt
           git add project/static/reports/linkchecker/linkchecker-report-BACKUP-*.txt || true
+
           git commit -m "🔗 LinkChecker report updated [CI]" || echo "No changes to commit"
           git push
+
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
